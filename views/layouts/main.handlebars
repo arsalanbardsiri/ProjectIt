@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Study Group</title>
+    <link rel="stylesheet" href="/public/assets/css/bootstrap.min.css"> <!-- If using Bootstrap -->
+    <link rel="stylesheet" href="/public/assets/css/styles.css"> <!-- Custom styles for the project -->
+    <script src="/public/assets/js/jquery.min.js"></script> <!-- If using jQuery -->
+    <!-- Add any other common header elements here -->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Virtual Study Group</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <!-- Other navigation items like Login, Signup, etc. can be added here -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        {{{body}}}  <!-- This is where the content of individual views will be inserted -->
+    </div>
+
+    <footer class="mt-5">
+        <p class="text-center">© 2023 Virtual Study Group</p>
+    </footer>
+
+    <script src="/public/assets/js/bootstrap.min.js"></script> <!-- If using Bootstrap's JS -->
+    <!-- Add any other common footer scripts here -->
+</body>
+
+</html>
