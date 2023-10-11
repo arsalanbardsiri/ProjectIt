@@ -16,7 +16,10 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bo
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static assets
 
 // Set up Handlebars for templating
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+const expressHandlebarsInstance = exphbs.create({
+  defaultLayout: 'main'
+});
+app.engine('handlebars', expressHandlebarsInstance.engine);
 app.set('view engine', 'handlebars');
 
 // Session configuration
