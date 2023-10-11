@@ -1,0 +1,27 @@
+<h2>Study Room: {{roomName}}</h2>
+
+<div class="chat-box">
+    <!-- Chat messages will appear here -->
+    {{#each messages}}
+    <p><strong>{{this.sender}}</strong>: {{this.text}}</p>
+    {{/each}}
+</div>
+
+<form action="/api/sendMessage" method="post">
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <input type="text" class="form-control" id="message" name="message">
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+<h3 class="mt-4">Participants</h3>
+<ul class="list-group">
+    {{#each participants}}
+    <li class="list-group-item">{{this.username}}</li>
+    {{/each}}
+</ul>
+
+<h3 class="mt-4">Room Details</h3>
+<p>Created Date: {{createdDate}}</p>
+<p>Number of Messages: {{numMessages}}</p>
