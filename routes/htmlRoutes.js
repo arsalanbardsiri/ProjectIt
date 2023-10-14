@@ -16,6 +16,11 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+// Render Dashboard (dashboard.handlebars)
+router.get('/dashboard', (req, res) => {
+    res.render('dashboard');
+});
+
 // Render a Specific Study Room (studyroom.handlebars)
 router.get('/studyroom/:id', async (req, res) => {
     try {
