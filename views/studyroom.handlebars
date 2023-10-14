@@ -1,14 +1,13 @@
-<h1>Study Room: {{room.topic}}</h1>
+<h1>{{room.topic}}</h1>
+<p>Description: {{room.description}}</p>
+<p>Created by: {{room.User.username}}</p>
 
-<section>
-    <h2>Room Details</h2>
-    <p>Topic: {{room.topic}}</p>
-    <p>Description: {{room.description}}</p>
-    <p>Created by: {{room.User.username}}</p>
-</section>
+<!-- Placeholder for chat functionality -->
+<div id="chat-window">
+    <!-- Chat messages will appear here -->
+</div>
 
-<!-- Placeholder for chat interface -->
-<section>
-    <h2>Chat</h2>
-    <p>This is where your chat interface would be, if you decide to implement it.</p>
-</section>
+<form id="chat-form">
+    <input type="text" id="chat-message" placeholder="Type a message...">
+    <button type="submit">Send</button>
+</form>

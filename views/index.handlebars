@@ -1,17 +1,20 @@
 <h1>Welcome to Virtual Study Group</h1>
 
-<!-- List of Study Rooms -->
-<section>
-    <h2>Available Study Rooms</h2>
-    {{#if rooms}}
-        <ul>
-            {{#each rooms}}
-                <li>
-                    <a href="/studyroom/{{this.id}}">{{this.topic}}</a> by {{this.User.username}}
-                </li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No study rooms available at the moment.</p>
-    {{/if}}
-</section>
+<!-- Check if user is logged in -->
+{{#if loggedIn}}
+    <p>Welcome back, {{username}}!</p>
+    <a href="/create-room">Create a new study room</a>
+    <a href="/logout">Logout</a>
+{{else}}
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+{{/if}}
+
+<h2>Available Study Rooms:</h2>
+<ul>
+    {{#each rooms}}
+        <li>
+            <a href="/studyroom/{{this.id}}">{{this.topic}}</a> - Created by: {{this.User.username}}
+        </li>
+    {{/each}}
+</ul>
