@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-  if (event) {
-    console.info("DOM loaded");
-  }
 
   // LOGOUT FUNCTION
   window.logout = function () {
