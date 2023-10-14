@@ -24,8 +24,8 @@ router.post("/users/register", (req, res) => {
 // Login using Passport
 router.post("/users/login", passport.authenticate("local"), (req, res) => {
     req.session.save(() => {
-        req.session.user_id = req.user.id; // Use req.user
-        req.session.email = req.user.email; // Use req.user
+        req.session.userId = req.user.id;
+        req.session.email = req.user.email;
         req.session.logged_in = true;
         // res.json({
         //     email: req.user.email,

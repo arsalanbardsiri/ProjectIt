@@ -1,8 +1,8 @@
 function withAuth(req, res, next) {
-    if (!req.session.user) {
-        res.status(401).json({ message: "Not authorized." });
-    } else {
+    if (req.session.userId) {
         next();
+    } else {
+        res.status(403).json({ message: "Not authorized." });
     }
 }
 
