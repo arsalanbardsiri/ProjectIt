@@ -37,9 +37,9 @@ router.post("/users/login", passport.authenticate("local"), (req, res) => {
 
 // Logout
 router.post("/users/logout", (req, res) => {
-    if (req.session.user_id) { // Change to user_id
+    if (req.session.userId) {
         req.session.destroy(() => {
-            res.status(204).end();
+            res.status(204).redirect("/login");
         });
     } else {
         res.status(404).send("No user session found");
