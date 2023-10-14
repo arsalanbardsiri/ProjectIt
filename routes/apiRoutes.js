@@ -37,19 +37,23 @@ router.post("/users/login", passport.authenticate("local"), (req, res) => {
 
 // Logout
 router.post("/users/logout", (req, res) => {
+    console.log("Logout route hit");
     if (req.session.userId) {
+        console.log("Session exists, attempting to destroy");
         req.session.destroy((err) => {
             if (err) {
-                // Log the error and respond with a 500 status code for server error
                 console.error("Error destroying session:", err);
                 return res.status(500).send("Internal Server Error");
             }
+            console.log("Session destroyed");
             res.status(204).end(); // No content response
         });
     } else {
+        console.log("No session found");
         res.status(404).send("No user session found");
     }
 });
+
 
 
 // Create a new study room
