@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.logout = function () {
     console.log("Logout function triggered");  // Log when the function is triggered
 
-    fetch("/users/logout", { method: "POST" })
+    fetch("/api/users/logout", { method: "POST" })
         .then((response) => {
             console.log(`Received response with status: ${response.status}`);  // Log the response status
             if (response.status === 204) {
