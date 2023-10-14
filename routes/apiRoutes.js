@@ -38,8 +38,13 @@ router.post("/users/login", passport.authenticate("local"), (req, res) => {
 // Logout
 router.post("/users/logout", (req, res) => {
     if (req.session.userId) {
-        req.session.destroy(() => {
-            res.status(204).redirect("/login");
+        req.session.destroy((err) => {
+            if (err) {
+                // Log the error and respond with a 500 status code for server error
+                console.error("Error destroying session:", err);
+                return res.status(500).send("Internal Server Error");
+            }
+            res.status(204).end(); // No content response
         });
     } else {
         res.status(404).send("No user session found");
