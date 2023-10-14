@@ -1,3 +1,13 @@
-<h1>Welcome to your Dashboard</h1>
-<p>Here you can view your study rooms, create new ones, and manage your sessions.</p>
-<!-- Add more dynamic content as needed -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome to the Dashboard, {{user.username}}!</h1>
+    <p>Email: {{user.email}}</p>
+    <a href="#" onclick="logout()">Logout</a>
+
+    <script src="../public/assets/js/app.js"></script>
+  </body>
+</html>
