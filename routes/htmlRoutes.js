@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { StudyRoom, User } = require('../models');  // Import the models
-const { withAuth } = require('../config/middleware');
+const { ensureAuthenticated } = require('../config/middleware');  // <-- Import the middleware
+const { StudyRoom, User } = require('../models');
 
 // Render Landing Page (index.handlebars)
 router.get('/', (req, res) => {
@@ -18,8 +18,8 @@ router.get('/login', (req, res) => {
 });
 
 // Render Dashboard (dashboard.handlebars)
-router.get('/dashboard', withAuth,(req, res) => {
-    res.render('dashboard');
+router.get('/dashboard', ensureAuthenticated, (req, res) => {
+    res.render('dashboard', { user: req.user });
 });
 
 // Render a Specific Study Room (studyroom.handlebars)
