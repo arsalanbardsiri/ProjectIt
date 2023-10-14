@@ -23,7 +23,7 @@ const sess = {
 app.use(session(sess));
 
 // Use handlebars as the default template engine
-app.engine('handlebars', exphbs.create({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 // Set up body parsing middlewares
