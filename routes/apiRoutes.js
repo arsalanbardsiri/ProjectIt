@@ -1,63 +1,56 @@
-const router = require('express').Router();
-const bcrypt = require('bcrypt');
-const { User, StudyRoom } = require('../models');
+const express = require("express");
+const router = express.Router();
+const db = require("../models");
+const bcrypt = require('bcryptjs');
 
-// User registration route
-router.post('/users/register', async (req, res) => {
-    try {
-        const existingUser = await User.findOne({ where: { email: req.body.email } });
-
-        if (existingUser) {
-            return res.status(400).json({ message: "Email is already registered." });
-        }
-
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-        const newUser = await User.create({
-            username: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
+// Register a new user
+router.post("/api/register", (req, res) => {
+    db.User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    })
+    .then(() => {
+        res.json({ message: "Registration successful!" });
+    })
+    .catch(err => {
+        console.log("Error during registration:", err);
+        res.status(500).json({
+            message: "Error registering user.",
+            error: err.message
         });
-
-        req.session.user = {
-            id: newUser.id,
-            username: newUser.username
-        };
-
-        res.status(201).json({ message: "Registration successful!" });
-
-    } catch (error) {
-        res.status(500).json({ message: "Error registering user.", error });
-    }
+    });
 });
 
-// User login route
-router.post('/users/login', async (req, res) => {
-    try {
-        const user = await User.findOne({ where: { email: req.body.email } });
-
-        console.log("Stored Hashed Password:", user.password);
-        console.log("Provided Password:", req.body.password);
-
-        if (!user || !await user.checkPassword(req.body.password)) {
-            return res.status(401).json({ message: "Invalid email or password." });
+// Login
+router.post("/api/login", (req, res) => {
+    db.User.findOne({
+        where: {
+            email: req.body.email
+        }
+    }).then(dbUser => {
+        // Check if the user was found and if the password is correct
+        if (!dbUser || !dbUser.checkPassword(req.body.password)) {
+            return res.status(400).json({
+                message: "Invalid email or password."
+            });
         }
 
-        req.session.user = {
-            id: user.id,
-            username: user.username
-        };
+        // If user is valid, initiate the session and respond
+        req.session.save(() => {
+            req.session.userId = dbUser.id;
 
-        res.json({ message: "Login successful!" });
-
-    } catch (error) {
-        res.status(500).json({ message: "Error logging in.", error });
-    }
+            return res.json({
+                user: dbUser,
+                message: "Login successful!"
+            });
+        });
+    });
 });
 
-// User logout route
-router.post('/users/logout', (req, res) => {
-    if (req.session.user) {
+// Logout
+router.post("/api/logout", (req, res) => {
+    if (req.session.userId) {
         req.session.destroy(() => {
             res.status(204).end();
         });
