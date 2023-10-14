@@ -27,8 +27,7 @@ router.post('/users/register', async (req, res) => {
         res.status(201).json({ message: "Registration successful!" });
 
     } catch (error) {
-        console.error("Error during registration:", error);
-        res.status(500).json({ message: "Error registering user.", error: error.message });
+        res.status(500).json({ message: "Error registering user.", error });
     }
 });
 
@@ -36,6 +35,9 @@ router.post('/users/register', async (req, res) => {
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findOne({ where: { email: req.body.email } });
+
+        console.log("Stored Hashed Password:", user.password);
+        console.log("Provided Password:", req.body.password);
 
         if (!user || !await user.checkPassword(req.body.password)) {
             return res.status(401).json({ message: "Invalid email or password." });
