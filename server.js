@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-const passport = require("./config/passport");  // Adding passport for authentication
+const passport = require('./config/passport');  // Adding passport for authentication
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 

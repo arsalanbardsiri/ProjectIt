@@ -5,7 +5,7 @@ const passport = require("../config/passport");  // Using passport for authentic
 const bcrypt = require('bcryptjs');
 
 // Register a new user
-router.post("/register", (req, res) => {
+router.post("/api/register", (req, res) => {
     db.User.create({
         username: req.body.username,
         email: req.body.email,
@@ -24,12 +24,16 @@ router.post("/register", (req, res) => {
 });
 
 // Login
-router.post("/login", passport.authenticate("local"), (req, res) => {
-    res.json({ message: "Login successful!" });
+router.post("/api/login", passport.authenticate('local'), (req, res) => {
+    res.json({
+        user: req.user,
+        message: "Login successful!"
+    });
 });
 
+
 // Logout
-router.post("/logout", (req, res) => {
+router.post("/api/logout", (req, res) => {
     if (req.session.userId) {
         req.session.destroy(() => {
             res.status(204).end();
