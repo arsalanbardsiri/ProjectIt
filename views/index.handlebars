@@ -1,4 +1,17 @@
 <h1>Welcome to Virtual Study Group</h1>
-<a href="/login">Login</a>
-<a href="/register">Register</a>
-<!-- You can later add logic to list available study rooms here -->
+
+<!-- List of Study Rooms -->
+<section>
+    <h2>Available Study Rooms</h2>
+    {{#if rooms}}
+        <ul>
+            {{#each rooms}}
+                <li>
+                    <a href="/studyroom/{{this.id}}">{{this.topic}}</a> by {{this.User.username}}
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No study rooms available at the moment.</p>
+    {{/if}}
+</section>
