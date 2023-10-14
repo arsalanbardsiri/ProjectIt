@@ -23,19 +23,23 @@ router.post("/users/register", (req, res) => {
 
 // Login using Passport
 router.post("/users/login", passport.authenticate("local"), (req, res) => {
-    // res.json({
-    //     email: req.user.email,
-    //     id: req.user.id
-    // });
-    return res.redirect('/dashboard');
-
+    req.session.save(() => {
+        req.session.user_id = req.user.id; // Use req.user
+        req.session.email = req.user.email; // Use req.user
+        req.session.logged_in = true;
+        // res.json({
+        //     email: req.user.email,
+        //     id: req.user.id
+        // });
+        return res.redirect('/dashboard');
+    });
 });
 
 // Logout
 router.post("/users/logout", (req, res) => {
-    if (req.session.userId) {
+    if (req.session.user_id) { // Change to user_id
         req.session.destroy(() => {
-            res.status(204).redirect("/login");
+            res.status(204).end();
         });
     } else {
         res.status(404).send("No user session found");
