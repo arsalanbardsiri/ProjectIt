@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const passport = require("../config/passport");  // Using passport for authentication
-const bcrypt = require('bcryptjs');
+const passport = require('../config/passport');
 
 // Register a new user
-router.post("/api/register", (req, res) => {
+router.post("/users/register", (req, res) => {
     db.User.create({
         username: req.body.username,
         email: req.body.email,
@@ -15,7 +14,6 @@ router.post("/api/register", (req, res) => {
         res.json({ message: "Registration successful!" });
     })
     .catch(err => {
-        console.log("Error during registration:", err);
         res.status(500).json({
             message: "Error registering user.",
             error: err.message
@@ -23,33 +21,27 @@ router.post("/api/register", (req, res) => {
     });
 });
 
-// Login
-router.post("/api/login", passport.authenticate('local'), (req, res) => {
+// Login using Passport
+router.post("/users/login", passport.authenticate("local"), (req, res) => {
     res.json({
-        user: req.user,
-        message: "Login successful!"
+        email: req.user.email,
+        id: req.user.id
     });
 });
 
-
 // Logout
-router.post("/api/logout", (req, res) => {
-    if (req.session.userId) {
-        req.session.destroy(() => {
-            res.status(204).end();
-        });
-    } else {
-        res.status(404).end();
-    }
+router.post("/users/logout", (req, res) => {
+    req.logout();
+    res.redirect("/");
 });
 
 // Create a new study room
 router.post('/studyrooms', async (req, res) => {
     try {
-        const newRoom = await StudyRoom.create({
+        const newRoom = await db.StudyRoom.create({
             topic: req.body.topic,
             description: req.body.description,
-            userId: req.session.user.id  // assuming you store the userId in session after login
+            userId: req.user.id
         });
         res.json(newRoom);
     } catch (error) {
@@ -60,10 +52,10 @@ router.post('/studyrooms', async (req, res) => {
 // Fetch and return list of all study rooms
 router.get('/studyrooms', async (req, res) => {
     try {
-        const rooms = await StudyRoom.findAll({
+        const rooms = await db.StudyRoom.findAll({
             include: [
                 {
-                    model: User,
+                    model: db.User,
                     attributes: ['username']
                 }
             ]
@@ -77,10 +69,10 @@ router.get('/studyrooms', async (req, res) => {
 // Fetch details of a specific study room based on the id
 router.get('/studyrooms/:id', async (req, res) => {
     try {
-        const room = await StudyRoom.findByPk(req.params.id, {
+        const room = await db.StudyRoom.findByPk(req.params.id, {
             include: [
                 {
-                    model: User,
+                    model: db.User,
                     attributes: ['username']
                 }
             ]
