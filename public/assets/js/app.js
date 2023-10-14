@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (response.status === 204) {
                     window.location.href = '/login';
                 } else {
-                    console.error('Failed to logout.');
+                    console.error('Logout was not successful. HTTP Status:', response.status);
                     return response.text();
                 }
             })
             .then(text => {
                 if (text) {
-                    console.error(text);
+                    console.error('Server Response:', text);
                 }
             })
             .catch(err => {
