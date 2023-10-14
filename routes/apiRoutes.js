@@ -23,10 +23,12 @@ router.post("/users/register", (req, res) => {
 
 // Login using Passport
 router.post("/users/login", passport.authenticate("local"), (req, res) => {
-    res.json({
-        email: req.user.email,
-        id: req.user.id
-    });
+    // res.json({
+    //     email: req.user.email,
+    //     id: req.user.id
+    // });
+    return res.redirect('/dashboard');
+
 });
 
 // Logout
