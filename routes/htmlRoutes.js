@@ -19,7 +19,9 @@ router.get('/login', (req, res) => {
 
 // Render Dashboard (dashboard.handlebars) - Protected by withAuth middleware
 router.get('/dashboard', withAuth, (req, res) => {
-    res.render('dashboard', { user: req.session.user });
+    res.render('dashboard', { 
+        username: req.user.username,
+        email: req.user.email });
 });
 
 // Render a Specific Study Room (studyroom.handlebars)
