@@ -25,7 +25,7 @@ StudyRoom.init(
         key: 'id'
       }
     }
-    // Add more fields as per your needs (like room description, capacity, etc.)
+    // Additional fields can be added as needed.
   },
   {
     sequelize,

@@ -1,29 +1,29 @@
 <h2>Login</h2>
-<form action="/api/login" method="post">
+<form action="/api/login" method="post" class="mb-4">
     <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label for="loginEmail">Email:</label>
+        <input type="email" class="form-control" id="loginEmail" name="email" required>
     </div>
     <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+        <label for="loginPassword">Password:</label>
+        <input type="password" class="form-control" id="loginPassword" name="password" required>
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
-<h2 class="mt-4">Sign Up</h2>
-<form action="/api/signup" method="post">
+<h2>Sign Up</h2>
+<form action="/api/signup" method="post" class="mb-4">
     <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="username" required>
+        <label for="signupUsername">Username:</label>
+        <input type="text" class="form-control" id="signupUsername" name="username" required>
     </div>
     <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label for="signupEmail">Email:</label>
+        <input type="email" class="form-control" id="signupEmail" name="email" required>
     </div>
     <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+        <label for="signupPassword">Password:</label>
+        <input type="password" class="form-control" id="signupPassword" name="password" required>
     </div>
     <div class="form-group">
         <label for="passwordConfirm">Confirm Password:</label>
@@ -33,11 +33,11 @@
 </form>
 
 <h2 class="mt-4">Study Rooms</h2>
-<ul class="list-group">
+<ul class="list-group mb-3">
     {{#each rooms}}
     <li class="list-group-item">
         {{this.roomName}} <a href="/studyroom/{{this.id}}" class="btn btn-primary float-right">Join</a>
     </li>
     {{/each}}
 </ul>
-<button class="btn btn-success mt-3">Create New Study Room</button>
+<button class="btn btn-success">Create New Study Room</button>

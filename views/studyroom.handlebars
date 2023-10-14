@@ -1,13 +1,13 @@
 <h2>Study Room: {{roomName}}</h2>
 
-<div class="chat-box">
+<div class="chat-box mb-4">
     <!-- Chat messages will appear here -->
     {{#each messages}}
     <p><strong>{{this.sender}}</strong>: {{this.text}}</p>
     {{/each}}
 </div>
 
-<form action="/api/sendMessage" method="post">
+<form action="/api/sendMessage" method="post" class="mb-4">
     <div class="form-group">
         <label for="message">Message:</label>
         <input type="text" class="form-control" id="message" name="message">
@@ -15,13 +15,13 @@
     <button type="submit" class="btn btn-primary">Send</button>
 </form>
 
-<h3 class="mt-4">Participants</h3>
-<ul class="list-group">
+<h3>Participants</h3>
+<ul class="list-group mb-3">
     {{#each participants}}
     <li class="list-group-item">{{this.username}}</li>
     {{/each}}
 </ul>
 
-<h3 class="mt-4">Room Details</h3>
+<h3>Room Details</h3>
 <p>Created Date: {{createdDate}}</p>
 <p>Number of Messages: {{numMessages}}</p>
