@@ -39,6 +39,8 @@ router.post("/users/login", passport.authenticate("local"), (req, res) => {
 // Logout
 router.post("/users/logout", (req, res) => {
     console.log("Logout route hit");
+    console.log(`Received ${req.method} request at ${req.path}`);
+
     if (req.session.userId) {
         console.log("Session exists, attempting to destroy");
         req.session.destroy((err) => {
