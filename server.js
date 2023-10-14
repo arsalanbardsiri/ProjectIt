@@ -21,6 +21,14 @@ const sess = {
     saveUninitialized: false
 };
 
+//Routes
+const htmlRoutes = require('./routes/htmlRoutes');
+const apiRoutes = require('./routes/apiRoutes');
+
+app.use('/', htmlRoutes);
+app.use('/api', apiRoutes);
+
+
 app.use(session(sess));
 
 // Set up Handlebars.js view engine
