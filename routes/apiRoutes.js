@@ -11,7 +11,6 @@ router.post("/users/register", (req, res) => {
         password: req.body.password
     })
     .then(() => {
-        // res.json({ message: "Registration successful!" });
         res.redirect('/dashboard');
     })
     .catch(err => {
@@ -28,10 +27,6 @@ router.post("/users/login", passport.authenticate("local"), (req, res) => {
         req.session.userId = req.user.id;
         req.session.email = req.user.email;
         req.session.logged_in = true;
-        // res.json({
-        //     email: req.user.email,
-        //     id: req.user.id
-        // });
         return res.redirect('/dashboard');
     });
 });

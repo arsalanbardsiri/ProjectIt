@@ -1,37 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   // LOGOUT FUNCTION
   window.logout = function () {
-    console.log("Logout function triggered");  // Log when the function is triggered
+    document.getElementById("loading").style.display = "block";
+
+    setTimeout(() => {
+      // Hide the loading message after 3 seconds
+      document.getElementById("loading").style.display = "none";
+    }, 3000);
 
     fetch("/api/users/logout", { method: "POST" })
-        .then((response) => {
-            console.log(`Received response with status: ${response.status}`);  // Log the response status
-            if (response.status === 204) {
-                window.location.href = "/login";
-            } else if (response.status === 404) {
-                console.error("User session not found.");
-                return response.text();
-            } else if (response.status === 500) {
-                console.error("Internal Server Error during logout.");
-                return response.text();
-            } else {
-                console.error(
-                    "Logout was not successful. HTTP Status:",
-                    response.status
-                );
-                return response.text();
-            }
-        })
-        .then((text) => {
-            if (text) {
-                console.error("Server Response:", text);  // Log the server's response text
-            }
-        })
-        .catch((err) => {
-            console.error("Error:", err);  // Log any fetch errors
-        });
-};
+      .then((response) => {
+        console.log(`Received response with status: ${response.status}`); // Log the response status
+        if (response.status === 204) {
+          window.location.href = "/login";
+        } else if (response.status === 404) {
+          console.error("User session not found.");
+          return response.text();
+        } else if (response.status === 500) {
+          console.error("Internal Server Error during logout.");
+          return response.text();
+        } else {
+          console.error(
+            "Logout was not successful. HTTP Status:",
+            response.status
+          );
+          return response.text();
+        }
+      })
+      .then((text) => {
+        if (text) {
+          console.error("Server Response:", text); // Log the server's response text
+        }
+      })
+      .catch((err) => {
+        console.error("Error:", err); // Log any fetch errors
+      });
+  };
 
   const loginForm = document.getElementById("login-form");
   const registerForm = document.getElementById("register-form");
