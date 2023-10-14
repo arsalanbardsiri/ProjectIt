@@ -1,13 +1,10 @@
-// Require necessary npm packages
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
-const path = require('path');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const routes = require('./routes');
 const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-// Set up the Express app
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -18,33 +15,27 @@ const sess = {
         db: sequelize
     }),
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {}
 };
-
-//Routes
-const htmlRoutes = require('./routes/htmlRoutes');
-const apiRoutes = require('./routes/apiRoutes');
-
-app.use('/', htmlRoutes);
-app.use('/api', apiRoutes);
- 
 
 app.use(session(sess));
 
-// Set up Handlebars.js view engine
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
+// Use handlebars as the default template engine
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-// Set up Express app to handle data parsing and static directory
+// Set up body parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Import routes (when you have them set up)
-// const routes = require('./controllers');
-// app.use(routes);
+// Serve static files from the "public" directory
+app.use(express.static('public'));
 
-// Sync Sequelize models and then start the Express app
+// Use the routes
+app.use(routes);
+
+// Start the server after syncing the database models
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
