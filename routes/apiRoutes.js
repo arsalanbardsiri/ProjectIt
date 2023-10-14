@@ -11,7 +11,8 @@ router.post("/users/register", (req, res) => {
         password: req.body.password
     })
     .then(() => {
-        res.json({ message: "Registration successful!" });
+        // res.json({ message: "Registration successful!" });
+        res.redirect('/dashboard');
     })
     .catch(err => {
         res.status(500).json({
