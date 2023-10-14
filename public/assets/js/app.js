@@ -9,7 +9,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(response => {
             if (response.status === 204) {
                 window.location.href = '/login';
+            } else {
+                console.error('Failed to logout.');
+                return response.text();
             }
+        })
+        .then(text => {
+            if (text) {
+                console.error(text);
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
         });
     };
 
