@@ -24,7 +24,7 @@ const sess = {
 app.use(session(sess));
 
 // Set up Handlebars.js view engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 // Set up Express app to handle data parsing and static directory
