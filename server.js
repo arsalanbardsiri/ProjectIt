@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-const routes = require('./routes');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
@@ -33,7 +34,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Use the routes
-app.use(routes);
+app.use('/api', apiRoutes);  // Prefixing with /api for clarity
+app.use('/', htmlRoutes);
+
 
 // Start the server after syncing the database models
 sequelize.sync({ force: false }).then(() => {
