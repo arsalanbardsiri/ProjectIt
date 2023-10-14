@@ -63,17 +63,57 @@ router.post('/users/logout', (req, res) => {
     }
 });
 
-// Placeholder for Study Room routes
-router.post('/studyrooms', (req, res) => {
-    // Handle creation of a new study room
+// Create a new study room
+router.post('/studyrooms', async (req, res) => {
+    try {
+        const newRoom = await StudyRoom.create({
+            topic: req.body.topic,
+            description: req.body.description,
+            userId: req.session.user.id  // assuming you store the userId in session after login
+        });
+        res.json(newRoom);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
-router.get('/studyrooms', (req, res) => {
-    // Fetch and return list of all study rooms
+// Fetch and return list of all study rooms
+router.get('/studyrooms', async (req, res) => {
+    try {
+        const rooms = await StudyRoom.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
+        res.json(rooms);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
-router.get('/studyrooms/:id', (req, res) => {
-    // Fetch details of a specific study room based on the id
+// Fetch details of a specific study room based on the id
+router.get('/studyrooms/:id', async (req, res) => {
+    try {
+        const room = await StudyRoom.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
+
+        if (!room) {
+            return res.status(404).json({ message: "Room not found." });
+        }
+
+        res.json(room);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
 module.exports = router;
