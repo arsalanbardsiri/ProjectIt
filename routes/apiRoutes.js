@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
-const bcrypt = require('bcrypt');
+const passport = require("../config/passport");  // Using passport for authentication
+const bcrypt = require('bcryptjs');
 
 // Register a new user
-router.post("/api/register", (req, res) => {
+router.post("/register", (req, res) => {
     db.User.create({
         username: req.body.username,
         email: req.body.email,
@@ -23,33 +24,12 @@ router.post("/api/register", (req, res) => {
 });
 
 // Login
-router.post("/api/login", (req, res) => {
-    db.User.findOne({
-        where: {
-            email: req.body.email
-        }
-    }).then(dbUser => {
-        // Check if the user was found and if the password is correct
-        if (!dbUser || !dbUser.checkPassword(req.body.password)) {
-            return res.status(400).json({
-                message: "Invalid email or password."
-            });
-        }
-
-        // If user is valid, initiate the session and respond
-        req.session.save(() => {
-            req.session.userId = dbUser.id;
-
-            return res.json({
-                user: dbUser,
-                message: "Login successful!"
-            });
-        });
-    });
+router.post("/login", passport.authenticate("local"), (req, res) => {
+    res.json({ message: "Login successful!" });
 });
 
 // Logout
-router.post("/api/logout", (req, res) => {
+router.post("/logout", (req, res) => {
     if (req.session.userId) {
         req.session.destroy(() => {
             res.status(204).end();
