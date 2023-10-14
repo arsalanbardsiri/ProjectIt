@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // LOGOUT FUNCTION
     window.logout = function() {
-        fetch('/api/logout', { method: 'POST' })
+        fetch('/users/logout', { method: 'POST' })
         .then(response => {
             if (response.status === 204) {
                 window.location.href = '/login';
