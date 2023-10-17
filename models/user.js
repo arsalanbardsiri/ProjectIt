@@ -35,20 +35,6 @@ User.init(
                 len: [8]
             }
         }
-        // ,
-        // first_name: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false
-        // },
-        // last_name: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false
-        // },
-        // profile_picture: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true
-        // }
-        
     },
     {
         hooks: {
@@ -68,5 +54,11 @@ User.init(
         modelName: 'user'
     }
 );
+
+User.associate = function(models) {
+    User.hasMany(models.Chat, {
+        onDelete: "cascade"
+    });
+};
 
 module.exports = User;

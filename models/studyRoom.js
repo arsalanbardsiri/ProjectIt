@@ -26,16 +26,6 @@ StudyRoom.init(
                 key: 'id'
             }
         }
-        // ,
-        // topic: {
-        //     type: DataTypes.STRING,
-        //     allowNull: false
-        // },
-        // description: {
-        //     type: DataTypes.TEXT,
-        //     allowNull: true
-        // }
-        
     },
     {
         sequelize,
@@ -45,5 +35,11 @@ StudyRoom.init(
         modelName: 'studyroom'
     }
 );
+
+StudyRoom.associate = function(models) {
+    StudyRoom.hasMany(models.Chat, {
+        onDelete: "cascade"
+    });
+};
 
 module.exports = StudyRoom;
