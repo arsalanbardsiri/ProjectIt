@@ -42,29 +42,38 @@
 
 // module.exports = db;
 
-const User = require('./user');
-const StudyRoom = require('./studyRoom');
-const Chat = require('./chat');
+const User = require("./user");
+const StudyRoom = require("./studyRoom");
+const Chat = require("./chat");
 
+// Users can create multiple study rooms
 User.hasMany(StudyRoom, {
-    foreignKey: 'userId',
-    onDelete: 'CASCADE'
+  foreignKey: "userId",
+  onDelete: "CASCADE",
 });
 
 StudyRoom.belongsTo(User, {
-    foreignKey: 'userId'
+  foreignKey: "userId",
+});
+
+// Users can send multiple messages
+User.hasMany(Chat, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
 });
 
 Chat.belongsTo(User, {
-    foreignKey: {
-        allowNull: false
-    }
+  foreignKey: "userId",
+});
+
+// Study rooms can have multiple messages
+StudyRoom.hasMany(Chat, {
+  foreignKey: "studyRoomId",
+  onDelete: "CASCADE",
 });
 
 Chat.belongsTo(StudyRoom, {
-    foreignKey: {
-        allowNull: false
-    }
+  foreignKey: "studyRoomId",
 });
 
 module.exports = { User, StudyRoom, Chat };
