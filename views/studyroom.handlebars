@@ -2,12 +2,14 @@
 <p>Description: {{room.description}}</p>
 <p>Created by: {{room.User.username}}</p>
 
-<!-- Placeholder for chat functionality -->
-<div id="chat-window">
-    <!-- Chat messages will appear here -->
+<!-- Chat functionality -->
+<div class="chat-section">
+    <div id="messages">
+        <!-- Messages will be populated here -->
+    </div>
+    
+    <div class="message-input">
+        <textarea id="messageInput" placeholder="Type your message..."></textarea>
+        <button id="sendMessage">Send</button>
+    </div>
 </div>
-
-<form id="chat-form">
-    <input type="text" id="chat-message" placeholder="Type a message...">
-    <button type="submit">Send</button>
-</form>

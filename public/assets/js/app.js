@@ -94,4 +94,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   }
+  // Check if we are on a study room page
+  if (window.location.pathname.includes("/studyroom/")) {
+    const roomId = window.location.pathname.split("/").pop();
+
+    // Fetch previous messages
+    fetch(`/api/studyrooms/${roomId}/messages`)
+      .then((response) => response.json())
+      .then((messages) => {
+        const messagesDiv = document.getElementById("messages");
+        messages.forEach((message) => {
+          const messageElem = document.createElement("div");
+          messageElem.className = "message";
+          messageElem.textContent = `${message.User.username}: ${message.message}`;
+          messagesDiv.prepend(messageElem); // Add messages in reverse order
+        });
+      });
+
+    // Send a new message
+    document.getElementById("sendMessage").addEventListener("click", () => {
+      const messageContent = document.getElementById("messageInput").value;
+      if (messageContent) {
+        fetch(`/api/studyrooms/${roomId}/messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: messageContent }),
+        }).then(() => {
+          // Clear the input and add the message to the chat
+          const messagesDiv = document.getElementById("messages");
+          const messageElem = document.createElement("div");
+          messageElem.className = "message";
+          messageElem.textContent = `You: ${messageContent}`;
+          messagesDiv.appendChild(messageElem);
+          document.getElementById("messageInput").value = "";
+        });
+      }
+    });
+  }
 });
