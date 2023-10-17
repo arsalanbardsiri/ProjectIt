@@ -55,16 +55,16 @@ StudyRoom.belongsTo(User, {
     foreignKey: 'userId'
 });
 
-Chat.belongsTo(User, {
-    foreignKey: {
-        allowNull: false
-    }
-});
+// Chat.belongsTo(User, {
+//     foreignKey: {
+//         allowNull: false
+//     }
+// });
 
-Chat.belongsTo(StudyRoom, {
-    foreignKey: {
-        allowNull: false
-    }
-});
+// Chat.belongsTo(StudyRoom, {
+//     foreignKey: {
+//         allowNull: false
+//     }
+// });
 
-module.exports = { User, StudyRoom, Chat };
+module.exports = { User, StudyRoom };
