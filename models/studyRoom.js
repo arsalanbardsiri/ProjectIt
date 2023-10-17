@@ -25,15 +25,16 @@ StudyRoom.init(
                 model: 'user',
                 key: 'id'
             }
-        },
-        topic: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        description: {
-            type: DataTypes.TEXT,
-            allowNull: true
         }
+        // ,
+        // topic: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false
+        // },
+        // description: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true
+        // }
         
     },
     {
