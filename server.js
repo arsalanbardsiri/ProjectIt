@@ -45,7 +45,7 @@ app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log('User connected:', socket.id);
 
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);

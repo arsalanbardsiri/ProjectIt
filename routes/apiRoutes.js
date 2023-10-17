@@ -57,7 +57,7 @@ router.post("/users/logout", (req, res) => {
 router.post('/studyrooms', async (req, res) => {
     try {
         const newRoom = await db.StudyRoom.create({
-            topic: req.body.topic,
+            name: req.body.topic,
             description: req.body.description,
             userId: req.user.id
         });

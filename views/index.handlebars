@@ -11,9 +11,10 @@
 
 <h2>Available Study Rooms:</h2>
 <ul>
-    {{#each rooms}}
+    {{#each studyRooms}}
         <li>
-            <a href="/studyroom/{{this.id}}">{{this.topic}}</a> - Created by: {{this.User.username}}
+            <a href="/studyroom/{{this.id}}">{{this.name}}</a> - Hosted by {{this.User.username}}
         </li>
     {{/each}}
 </ul>
+

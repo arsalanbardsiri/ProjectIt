@@ -2,9 +2,17 @@ const router = require('express').Router();
 const { StudyRoom, User } = require('../models');  // Import the models
 const withAuth = require('../config/middleware'); // Import the middleware
 
-// Render Landing Page (index.handlebars)
-router.get('/', (req, res) => {
-    res.render('index');
+// Render the home page with a list of all study rooms
+router.get('/', async (req, res) => {
+    try {
+        const studyRooms = await StudyRoom.findAll({
+            include: { model: User, attributes: ['username'] }
+        });
+        const rooms = studyRooms.map(room => room.get({ plain: true }));
+        res.render('index', { studyRooms: rooms });
+    } catch (err) {
+        res.status(500).render('error', { message: err.message });
+    }
 });
 
 // Render Registration Page (register.handlebars)
@@ -18,10 +26,20 @@ router.get('/login', (req, res) => {
 });
 
 // Render Dashboard (dashboard.handlebars) - Protected by withAuth middleware
-router.get('/dashboard', withAuth, (req, res) => {
-    res.render('dashboard', { 
-        username: req.user.username,
-        email: req.user.email });
+router.get('/dashboard', withAuth, async (req, res) => {
+    try {
+        const studyRooms = await StudyRoom.findAll({
+            include: { model: User, attributes: ['username'] }
+        });
+        const rooms = studyRooms.map(room => room.get({ plain: true }));
+        res.render('dashboard', {
+            username: req.user.username,
+            email: req.user.email,
+            studyRooms: rooms
+        });
+    } catch (err) {
+        res.status(500).render('error', { message: err.message });
+    }
 });
 
 // Render a Specific Study Room (studyroom.handlebars)
