@@ -53,7 +53,6 @@ router.post("/users/logout", (req, res) => {
 });
 
 
-
 // Create a new study room
 router.post('/studyrooms', async (req, res) => {
     try {
@@ -102,6 +101,42 @@ router.get('/studyrooms/:id', async (req, res) => {
         }
 
         res.json(room);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+// Send a new message to a study room
+router.post('/studyrooms/:id/messages', async (req, res) => {
+    try {
+        const newMessage = await db.Chat.create({
+            message: req.body.message,
+            userId: req.user.id,
+            studyRoomId: req.params.id
+        });
+        res.json(newMessage);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+// Get all messages from a specific study room
+router.get('/studyrooms/:id/messages', async (req, res) => {
+    try {
+        const messages = await db.Chat.findAll({
+            where: {
+                studyRoomId: req.params.id
+            },
+            include: [
+                {
+                    model: db.User,
+                    attributes: ['username']
+                }
+            ],
+            order: [['createdAt', 'DESC']],
+            limit: 50  // limit to the last 50 messages, for example
+        });
+        res.json(messages);
     } catch (error) {
         res.status(500).json(error);
     }
