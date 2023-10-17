@@ -44,6 +44,7 @@
 
 const User = require('./user');
 const StudyRoom = require('./studyRoom');
+const Chat = require('./chat');
 
 User.hasMany(StudyRoom, {
     foreignKey: 'userId',
@@ -54,4 +55,16 @@ StudyRoom.belongsTo(User, {
     foreignKey: 'userId'
 });
 
-module.exports = { User, StudyRoom };
+Chat.belongsTo(User, {
+    foreignKey: {
+        allowNull: false
+    }
+});
+
+Chat.belongsTo(StudyRoom, {
+    foreignKey: {
+        allowNull: false
+    }
+});
+
+module.exports = { User, StudyRoom, Chat };
