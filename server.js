@@ -10,6 +10,9 @@ const passport = require('./config/passport');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
 // Middleware for body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -41,9 +44,21 @@ app.use(passport.session());
 app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+
 // Sync the database and then start the server
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => {
+    http.listen(PORT, () => {
         console.log('App listening on PORT ' + PORT);
     });
 });

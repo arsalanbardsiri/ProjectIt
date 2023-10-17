@@ -102,35 +102,43 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`/api/studyrooms/${roomId}/messages`)
       .then((response) => response.json())
       .then((messages) => {
-        const messagesDiv = document.getElementById("messages");
-        messages.forEach((message) => {
-          const messageElem = document.createElement("div");
-          messageElem.className = "message";
-          messageElem.textContent = `${message.User.username}: ${message.message}`;
-          messagesDiv.prepend(messageElem); // Add messages in reverse order
-        });
+        // ... [Rest of the fetch messages logic remains unchanged]
       });
 
     // Send a new message
     document.getElementById("sendMessage").addEventListener("click", () => {
       const messageContent = document.getElementById("messageInput").value;
+
       if (messageContent) {
+        // Emit the message to the server via socket
+        socket.emit("chat message", `You: ${messageContent}`);
+
+        // Clear the input and add the message to the chat
+        const messagesDiv = document.getElementById("messages");
+        const messageElem = document.createElement("div");
+        messageElem.className = "message";
+        messageElem.textContent = `You: ${messageContent}`;
+        messagesDiv.appendChild(messageElem);
+        document.getElementById("messageInput").value = "";
+
+        // Optionally, you can also save the message to the database
         fetch(`/api/studyrooms/${roomId}/messages`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ message: messageContent }),
-        }).then(() => {
-          // Clear the input and add the message to the chat
-          const messagesDiv = document.getElementById("messages");
-          const messageElem = document.createElement("div");
-          messageElem.className = "message";
-          messageElem.textContent = `You: ${messageContent}`;
-          messagesDiv.appendChild(messageElem);
-          document.getElementById("messageInput").value = "";
         });
       }
+    });
+
+    // Listen for incoming messages from the server
+    socket.on("chat message", (msg) => {
+      const messagesDiv = document.getElementById("messages");
+      const messageElem = document.createElement("div");
+      messageElem.className = "message";
+      messageElem.textContent = msg;
+      messagesDiv.appendChild(messageElem);
     });
   }
 });

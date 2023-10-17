@@ -28,5 +28,20 @@
         <footer>
             <p>&copy; 2023 Virtual Study Group</p>
         </footer>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            if (document.getElementById('messages')) {
+                socket.on('chat message', (msg) => {
+                    const messagesDiv = document.getElementById('messages');
+                    const messageElem = document.createElement('div');
+                    messageElem.className = 'message';
+                    messageElem.textContent = msg;
+                    messagesDiv.appendChild(messageElem);
+                });
+            }
+        </script>
 </body>
 </html>
