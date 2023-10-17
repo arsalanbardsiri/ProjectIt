@@ -64,7 +64,7 @@ router.post('/studyrooms', async (req, res) => {
         // res.json(newRoom);
         res.redirect('/dashboard');
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).render('error', { message: err.message });
     }
 });
 
