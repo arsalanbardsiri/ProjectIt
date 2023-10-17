@@ -61,7 +61,8 @@ router.post('/studyrooms', async (req, res) => {
             description: req.body.description,
             userId: req.user.id
         });
-        res.json(newRoom);
+        // res.json(newRoom);
+        res.redirect('/dashboard');
     } catch (error) {
         res.status(500).json(error);
     }
