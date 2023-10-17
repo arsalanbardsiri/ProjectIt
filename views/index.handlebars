@@ -13,7 +13,8 @@
 <ul>
     {{#each studyRooms}}
         <li>
-            <a href="/studyroom/{{this.id}}">{{this.name}}</a> - Hosted by {{this.User.username}}
+            {{!-- <a href="/studyroom/{{this.id}}">{{this.name}}</a> - Hosted by {{this.User.username}} --}}
+            <p>{{this.name}} - Hosted by {{this.user.username}}</p> 
         </li>
     {{/each}}
 </ul>

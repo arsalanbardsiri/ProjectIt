@@ -63,6 +63,7 @@ router.get('/studyroom/:id', async (req, res) => {
         }
 
         const room = studyRoomData.get({ plain: true });
+        console.log(room);
         res.render('studyroom', { room });
     } catch (err) {
         res.status(500).json(err);
