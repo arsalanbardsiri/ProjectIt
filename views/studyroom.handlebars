@@ -1,19 +1,21 @@
-<h1>{{room.name}}</h1>
-<p>Description: {{room.description}}</p>
-<p>Created by: {{room.user.username}}</p>
+<body data-room-id="{{room.id}}">
+    <h1>{{room.name}}</h1>
+    <p>Description: {{room.description}}</p>
+    <p>Created by: {{room.user.username}}</p>
 
-<!-- Chat functionality -->
-<div class="chat-section">
-    <h2>Chatroom</h2>
-    <div id="messages" class="chat-window"></div>
-    
-    <div class="message-input">
-        <textarea id="messageInput" rows="3" placeholder="Type your message..."></textarea>
-        <button id="sendMessage" class="send-button">Send</button>
+    <!-- Chat functionality -->
+    <div class="chat-section">
+        <h2>Chatroom</h2>
+        <div id="messages" class="chat-window"></div>
+
+        <div class="message-input">
+            <textarea id="messageInput" rows="3" placeholder="Type your message..."></textarea>
+            <button id="sendMessage" class="send-button">Send</button>
+        </div>
     </div>
-</div>
 
-<!-- Including the Socket.io client-side library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <!-- Including the Socket.io client-side library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 
-<script src="/assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
+</body>
