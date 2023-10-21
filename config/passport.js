@@ -34,10 +34,12 @@ passport.use(new LocalStrategy(
 // In order to help keep authentication state across HTTP requests,
 // Sequelize needs to serialize and deserialize the user
 passport.serializeUser((user, cb) => {
+  console.log("Serializing User: ", user);
   cb(null, user);
 });
 
 passport.deserializeUser((obj, cb) => {
+  console.log("Deserializing Object: ", obj);
   cb(null, obj);
 });
 
