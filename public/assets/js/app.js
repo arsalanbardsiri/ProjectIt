@@ -94,4 +94,86 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
   }
+
+  // Chat Functionality
+  const messagesDiv = document.getElementById("messages");
+  if (messagesDiv) {
+    const roomId = document.body.getAttribute("data-room-id"); // Get roomId from the data attribute
+
+    let currentPage = 1;
+    loadMessages();
+
+    window.addEventListener("scroll", function () {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 500
+      ) {
+        loadMessages();
+      }
+    });
+
+    function loadMessages() {
+      fetch(`/api/studyrooms/${roomId}/messages?page=${currentPage}`)
+        .then((response) => response.json())
+        .then((messages) => {
+          messages.forEach((msg) => {
+            const messageElem = document.createElement("div");
+            messageElem.className = "message";
+            messageElem.textContent = `${msg.User.username} at ${msg.createdAt}: ${msg.message}`;
+            messagesDiv.appendChild(messageElem);
+          });
+          currentPage++;
+        });
+    }
+
+    // Socket.io code
+    const socketHost =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3001"
+        : window.location.origin;
+
+    const socket = io(socketHost, { withCredentials: true });
+
+    function appendMessageToChat(msg) {
+      const messageElem = document.createElement("div");
+      messageElem.className = "message";
+      messageElem.textContent = `${msg.user} at ${msg.timestamp}: ${msg.message}`;
+      messagesDiv.appendChild(messageElem);
+    }
+
+    function clearMessageInput() {
+      document.getElementById("messageInput").value = "";
+    }
+
+    socket.on("connect", () => {
+      console.log("Successfully connected to the server.");
+      socket.emit("join room", roomId);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Failed to connect to the server:", error);
+    });
+
+    document
+      .getElementById("sendMessage")
+      .addEventListener("click", function () {
+        const messageContent = document.getElementById("messageInput").value;
+        if (messageContent.trim() === "") return;
+        socket.emit("chat message", messageContent, roomId);
+        clearMessageInput();
+      });
+
+    document
+      .getElementById("messageInput")
+      .addEventListener("keypress", function (event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
+          event.preventDefault();
+          document.getElementById("sendMessage").click();
+        }
+      });
+
+    socket.on("chat message", (msg) => {
+      appendMessageToChat(msg);
+    });
+  }
 });

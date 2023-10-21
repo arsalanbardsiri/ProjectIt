@@ -121,9 +121,13 @@ router.post('/studyrooms/:id/messages', async (req, res) => {
     }
 });
 
-// Get all messages from a specific study room
+// Get all messages from a specific study room with pagination
 router.get('/studyrooms/:id/messages', async (req, res) => {
     try {
+        const limit = 50; // limit per page
+        const page = req.query.page ? parseInt(req.query.page, 10) : 1; // default to page 1 if not provided
+        const offset = (page - 1) * limit; // calculate the offset
+
         const messages = await db.Chat.findAll({
             where: {
                 studyRoomId: req.params.id
@@ -135,12 +139,16 @@ router.get('/studyrooms/:id/messages', async (req, res) => {
                 }
             ],
             order: [['createdAt', 'DESC']],
-            limit: 50  // limit to the last 50 messages, for example
+            limit: limit,
+            offset: offset
         });
+        
         res.json(messages);
     } catch (error) {
         res.status(500).json(error);
     }
 });
+
+
 
 module.exports = router;
