@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 body, html {
     height: 100%;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -9,21 +11,22 @@ body, html {
 #app {
     flex: 1;
     display: flex;
-    flex-direction: column; /* Add this to make sure the main content stretches */
+    flex-direction: column;
 }
 
-header {
-    background-color: #333;
+header, footer {
+    background: linear-gradient(90deg, #007BFF, #33C3F0);
     padding: 10px;
     color: white;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 nav ul {
     padding: 0;
     list-style-type: none;
-    display: flex; /* Switch from float to flexbox */
-    justify-content: space-around; /* Distribute menu items evenly */
+    display: flex;
+    justify-content: space-around;
 }
 
 nav ul li {
@@ -36,6 +39,7 @@ nav ul li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav ul li a:hover {
@@ -44,16 +48,12 @@ nav ul li a:hover {
 }
 
 main {
-    flex: 1; /* Ensures that the main content stretches to take available space */
+    flex: 1;
     padding: 20px;
 }
 
 footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    flex-shrink: 0; /* This ensures that the footer doesn't shrink if there's a lot of content */
+    flex-shrink: 0;
 }
 
 .chat-section {
@@ -61,15 +61,23 @@ footer {
     flex-direction: column;
     max-width: 500px;
     margin: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 #messages {
     flex: 1;
     overflow-y: auto;
-    border: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     height: 200px;
     padding: 10px;
     margin-bottom: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .message-input {
@@ -80,4 +88,111 @@ footer {
 .message-input textarea {
     flex: 1;
     margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+.message-input textarea:focus {
+    border-color: #007BFF;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body {
+    animation: fadeIn 1s;
+}
+
+.logout-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Styling for study room list - more specific targeting */
+.main ul.room-list {
+    padding-left: 0;
+}
+
+.main ul.room-list li {
+    background-color: #f5f5f5;
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    list-style: none;
+}
+
+.main ul.room-list li a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.main ul.room-list li a:hover {
+    color: #007BFF;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.message {
+    animation: fadeIn 0.5s;
+}
+
+.message {
+    background-color: #f1f1f1;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    position: relative;
+    max-width: 80%;
+}
+
+.message:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-right-color: #f1f1f1;
+    border-left: 0;
+    margin-top: -8px;
+    margin-left: -8px;
 }

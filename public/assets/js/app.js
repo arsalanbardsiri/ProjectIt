@@ -116,7 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
       fetch(`/api/studyrooms/${roomId}/messages?page=${currentPage}`)
         .then((response) => response.json())
         .then((messages) => {
-          messages.reverse().forEach((msg) => { // Note the addition of .reverse() here
+          messages.reverse().forEach((msg) => {
+            // Note the addition of .reverse() here
             const messageElem = document.createElement("div");
             messageElem.className = "message";
             messageElem.textContent = `${msg.user.username} at ${msg.createdAt}: ${msg.message}`;
