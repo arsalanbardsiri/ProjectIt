@@ -3,6 +3,38 @@
 
 _An interactive platform for students to create/join virtual study rooms, discuss topics, and share resources._
 
+<pre>/virtual-study-group
+├── /config
+│   ├── config.js
+│   ├── connection.js
+│   ├── middleware.js
+│   └── passport.js
+├── /models
+│   ├── chat.js
+│   ├── index.js
+│   ├── studyRoom.js
+│   └── user.js
+├── /public
+│   ├── /assets
+│   │   ├── /css
+│   │   │   └── styles.css
+│   │   └── /js
+│   │       └── app.js
+├── /routes
+│   ├── apiRoutes.js
+│   └── htmlRoutes.js
+├── server.js
+└── /views
+    ├── dashboard.handlebars
+    ├── error.handlebars
+    ├── index.handlebars
+    ├── /layouts
+    │   └── main.handlebars
+    ├── login.handlebars
+    ├── register.handlebars
+    └── studyroom.handlebars
+</pre>
+
 ## Table of Contents
 
 - [Overview](#overview)
