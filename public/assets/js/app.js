@@ -1,3 +1,12 @@
+function scrollToBottomOfChat() {
+  let messagesDiv = document.getElementById("messages");
+  if (messagesDiv) {
+    setTimeout(() => {
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }, 100); // Delay of 100ms
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // LOGOUT FUNCTION
   window.logout = function () {
@@ -124,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
             messagesDiv.appendChild(messageElem);
           });
           currentPage++;
+          scrollToBottomOfChat();
         });
     }
 
@@ -175,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     socket.on("chat message", (msg) => {
       appendMessageToChat(msg);
+  scrollToBottomOfChat();
     });
   }
 });
