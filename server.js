@@ -119,7 +119,10 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./models');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', function() {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
