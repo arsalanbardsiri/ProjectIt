@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 import authRoutes from './routes/authRoutes';
+import roomRoutes from './routes/roomRoutes';
 
 // Middleware
 app.use(helmet());
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/rooms', roomRoutes);
 
 // Health Check
 app.get('/health', (req: Request, res: Response) => {
