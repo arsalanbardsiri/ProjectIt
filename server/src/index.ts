@@ -8,10 +8,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+import authRoutes from './routes/authRoutes';
+
 // Middleware
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Health Check
 app.get('/health', (req: Request, res: Response) => {
