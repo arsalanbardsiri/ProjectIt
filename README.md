@@ -48,6 +48,19 @@ graph TD
 -   **Caching & Messaging**: Redis (Pub/Sub, Job Queue, Rate Limiting).
 -   **DevOps**: Docker Compose, GitHub Actions (CI).
 
+## ☁️ Deployment (The "Forever Free" Stack)
+
+This project is deployed using a distributed multi-cloud strategy to maximize performance while remaining cost-effective:
+
+| Component | Service | Role |
+|-----------|---------|------|
+| **Frontend** | [Vercel](https://vercel.com) | Next.js Edge Network & Hosting |
+| **Backend** | [Render](https://render.com) | Node.js API Server |
+| **Database** | [Supabase](https://supabase.com) | Managed PostgreSQL |
+| **Redis** | [Upstash](https://upstash.com) | Serverless Redis for Pub/Sub & Queues |
+
+See `deployment.md` for a detailed step-by-step guide on how to replicate this infrastructure.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
