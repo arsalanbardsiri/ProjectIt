@@ -4,8 +4,10 @@ import Redis from 'ioredis';
 import { verifyToken } from './utils/auth';
 import { PrismaClient } from '@prisma/client';
 import { Server as HttpServer } from 'http';
+import Filter from 'bad-words';
 
 const prisma = new PrismaClient();
+const filter = new Filter();
 
 export const initializeSocket = (httpServer: HttpServer) => {
     const io = new Server(httpServer, {
@@ -45,9 +47,12 @@ export const initializeSocket = (httpServer: HttpServer) => {
 
         socket.on('send_message', async ({ roomId, content }: { roomId: string, content: string }) => {
             try {
+                // Profanity Filter
+                const cleanContent = filter.clean(content);
+
                 const message = await prisma.message.create({
                     data: {
-                        content,
+                        content: cleanContent,
                         roomId,
                         senderId: socket.data.user.userId,
                     },

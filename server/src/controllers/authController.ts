@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 import { generateToken, hashPassword, comparePassword } from '../utils/auth';
+import { addJob } from '../queue/queue';
 
 const prisma = new PrismaClient();
 
@@ -32,6 +33,9 @@ export const register = async (req: Request, res: Response) => {
         const user = await prisma.user.create({
             data: { username, email, password: hashedPassword },
         });
+
+        // Add welcome email job to queue
+        await addJob({ type: 'WELCOME_EMAIL', email: user.email, username: user.username });
 
         const token = generateToken(user.id);
         res.status(201).json({ user: { id: user.id, username: user.username, email: user.email }, token });
