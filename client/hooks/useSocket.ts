@@ -11,7 +11,8 @@ export const useSocket = (roomId: string) => {
         if (!token) return;
 
         // Initialize socket
-        socketRef.current = io('http://localhost:4000', {
+        const socketUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+        socketRef.current = io(socketUrl, {
             auth: { token },
         });
 
