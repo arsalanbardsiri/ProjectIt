@@ -1,6 +1,15 @@
-import redis from '../config/redis';
+import Redis from 'ioredis';
 import { QUEUE_NAME } from './queue';
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+const redis = new Redis(redisUrl, {
+    maxRetriesPerRequest: null,
+    tls: redisUrl.startsWith('rediss://') ? { rejectUnauthorized: false } : undefined
+});
 
 const processJobs = async () => {
     console.log('[worker]: Worker started, waiting for jobs...');
@@ -42,17 +51,18 @@ const processJobs = async () => {
                     });
                     console.log(`[worker]: Email sent to ${jobData.email}`);
                 }
-            } catch (error) {
-                console.error('[worker]: Error processing job', error);
-                // Wait a bit before retrying to avoid tight loop on error
-                await new Promise(resolve => setTimeout(resolve, 5000));
             }
+        } catch (error) {
+            console.error('[worker]: Error processing job', error);
+            // Wait a bit before retrying to avoid tight loop on error
+            await new Promise(resolve => setTimeout(resolve, 5000));
         }
+    }
 };
 
-    // Start the worker if this file is run directly
-    if (require.main === module) {
-        processJobs();
-    }
+// Start the worker if this file is run directly
+if (require.main === module) {
+    processJobs();
+}
 
-    export default processJobs;
+export default processJobs;

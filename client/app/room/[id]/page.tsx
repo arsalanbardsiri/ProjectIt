@@ -45,7 +45,18 @@ export default function RoomPage() {
         if (userStr) {
             setCurrentUser(JSON.parse(userStr));
         }
-        fetchRoomDetails();
+        const joinAndFetch = async () => {
+            try {
+                // Try to join the room first
+                await api.post(`/rooms/${roomId}/join`);
+            } catch (error) {
+                // Ignore if already joined or other error, just proceed to fetch
+                console.log('Already joined or error joining');
+            }
+            fetchRoomDetails();
+        };
+
+        joinAndFetch();
     }, [roomId]);
 
     // Scroll to bottom on new message

@@ -33,6 +33,11 @@ app.get('/health', (req: Request, res: Response) => {
 // Initialize Socket.io
 initializeSocket(httpServer);
 
+import processJobs from './queue/worker';
+
 httpServer.listen(PORT, () => {
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
+
+    // Start the background worker
+    processJobs().catch(err => console.error('[worker]: Failed to start worker', err));
 });
