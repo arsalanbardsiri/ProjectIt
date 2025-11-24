@@ -17,8 +17,14 @@ export const initializeSocket = (httpServer: HttpServer) => {
         }
     });
 
-    const pubClient = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+    const pubClient = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+        tls: process.env.REDIS_URL?.startsWith('rediss://') ? { rejectUnauthorized: false } : undefined
+    });
     const subClient = pubClient.duplicate();
+
+    // Add error handlers to prevent crashes
+    pubClient.on('error', (err) => console.error('[socket]: Redis Pub Error', err.message));
+    subClient.on('error', (err) => console.error('[socket]: Redis Sub Error', err.message));
 
     io.adapter(createAdapter(pubClient, subClient));
 
