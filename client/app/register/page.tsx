@@ -50,7 +50,11 @@ export default function RegisterPage() {
                 <form onSubmit={handleRegister}>
                     <CardContent className="space-y-4">
                         {error && (
-                            <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                            <div
+                                className="rounded-md bg-destructive/15 p-3 text-sm text-destructive"
+                                role="alert"
+                                aria-live="polite"
+                            >
                                 {error}
                             </div>
                         )}
@@ -63,6 +67,7 @@ export default function RegisterPage() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
+                                aria-invalid={!!error}
                             />
                         </div>
                         <div className="space-y-2">
@@ -74,6 +79,7 @@ export default function RegisterPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                aria-invalid={!!error}
                             />
                         </div>
                         <div className="space-y-2">
@@ -84,11 +90,12 @@ export default function RegisterPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                aria-invalid={!!error}
                             />
                         </div>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4">
-                        <Button type="submit" className="w-full" disabled={loading}>
+                        <Button type="submit" className="w-full" disabled={loading} aria-busy={loading}>
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Sign Up
                         </Button>

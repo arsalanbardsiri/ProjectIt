@@ -38,7 +38,7 @@ export default function LandingPage() {
                 Start Learning <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Link href="https://github.com/arsalanbardsiri/ProjectIt" target="_blank">
+            <Link href="https://github.com/arsalanbardsiri/ProjectIt" target="_blank" aria-label="View on GitHub (opens in a new tab)">
               <Button variant="outline" size="lg">
                 View on GitHub
               </Button>
